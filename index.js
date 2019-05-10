@@ -1,30 +1,50 @@
 import React from 'react';
+import Select from 'react-select';
+import { keyBy } from 'lodash';
 
 export default props => {
-	const { defaultValue = 'all', enumProps = {}, Menu, page, list, ...defaultProps } = props;
+	const { defaultValue = 'all', editable = false, id, list, onChange, style, ...defaultProps } = props;
+
+	let options = [];
+	if (editable) {
+		options = list.map(d => ({ label: d, value: d }));
+	}
+	let optionsObj = keyBy(options, 'value');
 
 	return {
 		...defaultProps,
-		Cell: props => {
-			return props.value;
+		style: { ...style, overflow: editable ? 'visible' : 'hidden' },
+		Cell: ({ original, value }) => {
+			if (editable) {
+				return (
+					<Select
+						value={optionsObj[value] ? optionsObj[value] : null}
+						onChange={e => onChange(e ? { Id: original.Id, [id]: e.value } : null)}
+						options={options}
+					/>
+				);
+			}
+
+			return value;
 		},
-		Filter: ({ filter, onChange }) => (
-			<div style={{ width: '100%' }}>
-				<select onChange={e => onChange(e.target.value)} value={filter ? filter.value : defaultValue}>
-					<option value="all">All</option>
-					{list.map(d => (
-						<option key={d} value={d}>
-							{d}
-						</option>
-					))}
-				</select>
-				<a
-					title="Clear Filtering."
-					style={{ marginLeft: '4px' }}
-					class="fa fa-chain-broken"
-					onClick={() => onChange('')}
+		Filter: ({ filter, onChange }) => {
+			options = [...options, { label: 'All', value: 'all' }];
+			optionsObj = keyBy(options, 'value');
+
+			return (
+				<Select
+					isClearable
+					value={
+						filter
+							? optionsObj[filter.value]
+								? optionsObj[filter.value]
+								: optionsObj[defaultValue]
+							: optionsObj[defaultValue]
+					}
+					onChange={e => onChange(e ? e.value : '')}
+					options={options}
 				/>
-			</div>
-		)
+			);
+		}
 	};
 };

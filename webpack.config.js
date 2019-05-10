@@ -50,9 +50,11 @@ module.exports = {
 	output: {
 		path: `${__dirname}/dist/`,
 		filename: '[name].min.js',
+		chunkFilename: '[name].[chunkhash].chunk.min.js',
 		libraryTarget: 'commonjs2'
 	},
 	plugins: [
+		new webpack.optimize.AggressiveMergingPlugin(),
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new webpack.DefinePlugin({
 			'process.env': {
