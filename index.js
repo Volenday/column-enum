@@ -28,21 +28,21 @@ export default props => {
 			return value;
 		},
 		Filter: ({ filter, onChange }) => {
-			options = [...options, { label: 'All', value: 'all' }];
-			optionsObj = keyBy(options, 'value');
+			const optionsFilter = [{ label: 'All', value: 'all' }, ...options],
+				optionsFilterObj = keyBy(optionsFilter, 'value');
 
 			return (
 				<Select
 					isClearable
 					value={
 						filter
-							? optionsObj[filter.value]
-								? optionsObj[filter.value]
-								: optionsObj[defaultValue]
-							: optionsObj[defaultValue]
+							? optionsFilterObj[filter.value]
+								? optionsFilterObj[filter.value]
+								: optionsFilterObj[defaultValue]
+							: optionsFilterObj[defaultValue]
 					}
 					onChange={e => onChange(e ? e.value : '')}
-					options={options}
+					options={optionsFilter}
 				/>
 			);
 		}
