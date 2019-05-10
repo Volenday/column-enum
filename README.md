@@ -7,11 +7,11 @@
 Using npm:
 
 ```sh
-npm install --save @volenday/column-enum
+npm install --save column-enum
 ```
 
 or using yarn:
 
 ```sh
-yarn add @volenday/column-enum
+yarn add column-enum
 ```
