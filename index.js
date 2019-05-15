@@ -51,7 +51,6 @@ export default props => {
 			return (
 				<Select
 					inputId={`${id}-filter`}
-					isClearable
 					value={
 						filter
 							? optionsFilterObj[filter.value]
