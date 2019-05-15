@@ -3,7 +3,16 @@ import Select from 'react-select';
 import { keyBy } from 'lodash';
 
 export default props => {
-	const { defaultValue = 'all', editable = false, id, list, onChange, style, ...defaultProps } = props;
+	const {
+		defaultValue = 'all',
+		editable = false,
+		headerStyle = {},
+		id,
+		list,
+		onChange,
+		style = {},
+		...defaultProps
+	} = props;
 
 	let options = [];
 	if (editable) {
@@ -13,14 +22,22 @@ export default props => {
 
 	return {
 		...defaultProps,
-		style: { ...style, overflow: editable ? 'visible' : 'hidden' },
-		Cell: ({ original, value }) => {
+		style: { ...style, overflow: editable ? 'visible' : 'hidden', display: 'flex', alignItems: 'center' },
+		headerStyle: {
+			...headerStyle,
+			overflow: editable ? 'visible' : 'hidden',
+			display: 'flex',
+			alignItems: 'center'
+		},
+		Cell: ({ index, original, value }) => {
 			if (editable) {
 				return (
 					<Select
+						inputId={`${id}-${index}-cell`}
 						value={optionsObj[value] ? optionsObj[value] : null}
 						onChange={e => onChange(e ? { Id: original.Id, [id]: e.value } : null)}
 						options={options}
+						styles={{ container: (provided, state) => ({ ...provided, flex: 1 }) }}
 					/>
 				);
 			}
@@ -33,6 +50,7 @@ export default props => {
 
 			return (
 				<Select
+					inputId={`${id}-filter`}
 					isClearable
 					value={
 						filter
@@ -43,6 +61,7 @@ export default props => {
 					}
 					onChange={e => onChange(e ? e.value : '')}
 					options={optionsFilter}
+					styles={{ container: (provided, state) => ({ ...provided, flex: 1 }) }}
 				/>
 			);
 		}
