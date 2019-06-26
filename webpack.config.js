@@ -1,12 +1,11 @@
 const webpack = require('webpack');
-const path = require('path');
 
 module.exports = {
 	mode: 'production',
 	context: __dirname,
 	devtool: false,
 	entry: {
-		index: ['@babel/polyfill/noConflict', './index.js']
+		index: ['core-js/stable', 'regenerator-runtime/runtime', './index.js']
 	},
 	module: {
 		rules: [

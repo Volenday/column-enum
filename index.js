@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import { keyBy } from 'lodash';
+import keyBy from 'lodash/keyBy';
 
 export default props => {
 	const {
