@@ -52,6 +52,12 @@ module.exports = {
 		chunkFilename: '[name].[chunkhash].chunk.min.js',
 		libraryTarget: 'commonjs2'
 	},
+	externals: {
+		lodash: 'commonjs lodash',
+		react: 'commonjs react',
+		'react-dom': 'commonjs react-dom',
+		'react-select': 'commonjs react-select'
+	},
 	plugins: [
 		new webpack.optimize.AggressiveMergingPlugin(),
 		new webpack.optimize.OccurrenceOrderPlugin(),
