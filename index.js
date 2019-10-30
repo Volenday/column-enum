@@ -30,6 +30,8 @@ export default props => {
 			alignItems: 'center'
 		},
 		Cell: ({ index, original, value }) => {
+			if (typeof value == 'undefined') return null;
+
 			if (editable) {
 				return (
 					<Select
@@ -37,7 +39,7 @@ export default props => {
 						value={optionsObj[value] ? optionsObj[value] : null}
 						onChange={e => onChange(e ? { Id: original.Id, [id]: e.value } : null)}
 						options={options}
-						styles={{ container: (provided, state) => ({ ...provided, flex: 1 }) }}
+						styles={{ container: provided => ({ ...provided, flex: 1 }) }}
 					/>
 				);
 			}
@@ -60,7 +62,7 @@ export default props => {
 					}
 					onChange={e => onChange(e ? e.value : '')}
 					options={optionsFilter}
-					styles={{ container: (provided, state) => ({ ...provided, flex: 1 }) }}
+					styles={{ container: provided => ({ ...provided, flex: 1 }) }}
 				/>
 			);
 		}
