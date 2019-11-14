@@ -23,7 +23,7 @@ export default props => {
 			display: 'flex',
 			alignItems: 'center'
 		},
-		Cell: ({ value }) => {
+		Cell: ({ original, value }) => {
 			if (typeof value == 'undefined') return null;
 
 			if (editable) {
