@@ -32,7 +32,7 @@ export default props => {
 						id={id}
 						list={list}
 						multiple={multiple}
-						onChange={onChange}
+						onChange={(e, field, value) => onChange({ Id: original.Id, [field]: value })}
 						withLabel={false}
 						value={value}
 					/>
