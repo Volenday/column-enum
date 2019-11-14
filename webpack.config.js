@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
 	mode: 'production',
@@ -53,10 +54,9 @@ module.exports = {
 		libraryTarget: 'commonjs2'
 	},
 	externals: {
-		lodash: 'commonjs lodash',
-		react: 'commonjs react',
-		'react-dom': 'commonjs react-dom',
-		'react-select': 'commonjs react-select'
+		react: 'react',
+		'react-dom': 'react-dom',
+		'@volenday/input-select': '@volenday/input-select'
 	},
 	plugins: [
 		new webpack.optimize.AggressiveMergingPlugin(),
@@ -65,6 +65,13 @@ module.exports = {
 			'process.env': {
 				NODE_ENV: JSON.stringify('production')
 			}
+		}),
+		new CompressionPlugin({
+			filename: '[path].gz[query]',
+			algorithm: 'gzip',
+			test: /\.js$|\.css$|\.html$/,
+			threshold: 10240,
+			minRatio: 0.7
 		})
 	]
 };

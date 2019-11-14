@@ -1,6 +1,5 @@
 import React from 'react';
-import Select from 'react-select';
-import keyBy from 'lodash/keyBy';
+import InputSelect from '@volenday/input-select';
 
 export default props => {
 	const {
@@ -9,6 +8,7 @@ export default props => {
 		headerStyle = {},
 		id,
 		list,
+		multiple = false,
 		onChange,
 		style = {},
 		...defaultProps
@@ -18,7 +18,6 @@ export default props => {
 	if (editable) {
 		options = list.map(d => ({ label: d, value: d }));
 	}
-	let optionsObj = keyBy(options, 'value');
 
 	return {
 		...defaultProps,
@@ -29,17 +28,18 @@ export default props => {
 			display: 'flex',
 			alignItems: 'center'
 		},
-		Cell: ({ index, original, value }) => {
+		Cell: ({ value }) => {
 			if (typeof value == 'undefined') return null;
 
 			if (editable) {
 				return (
-					<Select
-						inputId={`${id}-${index}-cell`}
-						value={optionsObj[value] ? optionsObj[value] : null}
-						onChange={e => onChange(e ? { Id: original.Id, [id]: e.value } : null)}
-						options={options}
-						styles={{ container: provided => ({ ...provided, flex: 1 }) }}
+					<InputSelect
+						id={id}
+						list={list}
+						multiple={multiple}
+						onChange={onChange}
+						withLabel={false}
+						value={value}
 					/>
 				);
 			}
@@ -47,22 +47,15 @@ export default props => {
 			return value;
 		},
 		Filter: ({ filter, onChange }) => {
-			const optionsFilter = [{ label: 'All', value: 'all' }, ...options],
-				optionsFilterObj = keyBy(optionsFilter, 'value');
+			const listFilter = ['All', ...options];
 
 			return (
-				<Select
-					inputId={`${id}-filter`}
-					value={
-						filter
-							? optionsFilterObj[filter.value]
-								? optionsFilterObj[filter.value]
-								: optionsFilterObj[defaultValue]
-							: optionsFilterObj[defaultValue]
-					}
-					onChange={e => onChange(e ? e.value : '')}
-					options={optionsFilter}
-					styles={{ container: provided => ({ ...provided, flex: 1 }) }}
+				<InputSelect
+					id={`${id}-filter`}
+					list={listFilter}
+					onChange={(e, field, value) => onChange(value)}
+					withLabel={false}
+					value={filter ? filter.value : null}
 				/>
 			);
 		}
