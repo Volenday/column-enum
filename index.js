@@ -14,11 +14,6 @@ export default props => {
 		...defaultProps
 	} = props;
 
-	let options = [];
-	if (editable) {
-		options = list.map(d => ({ label: d, value: d }));
-	}
-
 	return {
 		...defaultProps,
 		style: { ...style, overflow: editable ? 'visible' : 'hidden', display: 'flex', alignItems: 'center' },
@@ -47,7 +42,7 @@ export default props => {
 			return value;
 		},
 		Filter: ({ filter, onChange }) => {
-			const listFilter = ['All', ...options];
+			const listFilter = ['All', ...list];
 
 			return (
 				<InputSelect
