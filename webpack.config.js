@@ -54,9 +54,9 @@ module.exports = {
 		libraryTarget: 'commonjs2'
 	},
 	externals: {
+		'@volenday/input-select': '@volenday/input-select',
 		react: 'react',
-		'react-dom': 'react-dom',
-		'@volenday/input-select': '@volenday/input-select'
+		'react-dom': 'react-dom'
 	},
 	plugins: [
 		new webpack.optimize.AggressiveMergingPlugin(),
