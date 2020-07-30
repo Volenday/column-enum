@@ -2,28 +2,11 @@ import React from 'react';
 import InputSelect from '@volenday/input-select';
 
 export default props => {
-	const {
-		defaultValue = 'all',
-		editable = false,
-		headerStyle = {},
-		id,
-		list,
-		multiple = false,
-		onChange,
-		style = {},
-		...defaultProps
-	} = props;
+	const { defaultValue = 'all', editable = false, id, list, multiple = false, onChange, ...defaultProps } = props;
 
 	return {
 		...defaultProps,
-		style: { ...style, overflow: editable ? 'visible' : 'hidden', display: 'flex', alignItems: 'center' },
-		headerStyle: {
-			...headerStyle,
-			overflow: editable ? 'visible' : 'hidden',
-			display: 'flex',
-			alignItems: 'center'
-		},
-		Cell: ({ original, value }) => {
+		Cell: ({ row, value }) => {
 			if (typeof value == 'undefined') return null;
 
 			if (editable) {
@@ -32,7 +15,7 @@ export default props => {
 						id={id}
 						list={list}
 						multiple={multiple}
-						onChange={(e, field, value) => onChange({ Id: original.Id, [field]: value })}
+						onChange={(e, field, value) => onChange({ Id: row.Id, [field]: value })}
 						withLabel={false}
 						value={value}
 					/>
@@ -41,16 +24,16 @@ export default props => {
 
 			return value;
 		},
-		Filter: ({ filter, onChange }) => {
+		Filter: ({ column: { filterValue, setFilter } }) => {
 			const listFilter = ['All', ...list];
 
 			return (
 				<InputSelect
 					id={`${id}-filter`}
 					list={listFilter}
-					onChange={(e, field, value) => onChange(value)}
+					onChange={(e, field, value) => setFilter(value !== 'All' ? value : '')}
 					withLabel={false}
-					value={filter ? filter.value : null}
+					value={filterValue ? filterValue : 'All'}
 				/>
 			);
 		}
