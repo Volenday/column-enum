@@ -6,7 +6,7 @@ export default props => {
 
 	return {
 		...defaultProps,
-		Cell: ({ row, value }) => {
+		Cell: ({ row: { original }, value }) => {
 			if (typeof value == 'undefined') return null;
 
 			if (editable) {
@@ -15,7 +15,7 @@ export default props => {
 						id={id}
 						list={list}
 						multiple={multiple}
-						onChange={(e, field, value) => onChange({ Id: row.Id, [field]: value })}
+						onChange={(e, field, value) => onChange({ Id: original.Id, [field]: value })}
 						withLabel={false}
 						value={value}
 					/>
