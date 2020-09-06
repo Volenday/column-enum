@@ -1,9 +1,7 @@
 import React from 'react';
 import InputSelect from '@volenday/input-select';
 
-export default props => {
-	const { defaultValue = 'all', editable = false, id, list, multiple = false, onChange, ...defaultProps } = props;
-
+export default ({ defaultValue = 'all', editable = false, id, list, multiple = false, onChange, ...defaultProps }) => {
 	return {
 		...defaultProps,
 		Cell: ({ row: { original }, value }) => {
@@ -22,7 +20,7 @@ export default props => {
 				);
 			}
 
-			return value;
+			return <span>{value}</span>;
 		},
 		Filter: ({ column: { filterValue, setFilter } }) => {
 			const listFilter = ['All', ...list];
