@@ -55,6 +55,7 @@ module.exports = {
 	},
 	externals: {
 		'@volenday/input-select': '@volenday/input-select',
+		antd: 'antd',
 		react: 'react',
 		'react-dom': 'react-dom'
 	},
