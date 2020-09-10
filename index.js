@@ -27,10 +27,7 @@ const Cell = memo(({ other: { editable, id, list, multiple, onChange }, row: { o
 				id={id}
 				list={list}
 				multiple={multiple}
-				onChange={(e, field, value) => {
-					console.log(field, value);
-					onChange({ Id: original.Id, [field]: value });
-				}}
+				onChange={(e, field, value) => onChange({ Id: original.Id, [field]: value })}
 				withLabel={false}
 				value={value}
 			/>
@@ -47,10 +44,7 @@ const Filter = memo(({ column: { filterValue, setFilter }, other: { id, list } }
 		<InputSelect
 			id="filter"
 			list={listFilter}
-			onChange={(e, field, value) => {
-				console.log(field, value);
-				setFilter(value !== 'All' ? value : '');
-			}}
+			onChange={(e, field, value) => setFilter(value !== 'All' ? value : '')}
 			withLabel={false}
 			value={filterValue ? filterValue : 'All'}
 		/>
