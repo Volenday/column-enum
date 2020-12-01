@@ -1,20 +1,23 @@
 import React, { memo, Suspense } from 'react';
 import { Skeleton } from 'antd';
-import InputSelect from '@volenday/input-select';
+
+const browser = typeof process.browser !== 'undefined' ? process.browser : true;
 
 export default ({ defaultValue = 'all', editable = false, id, list, multiple = false, onChange, ...defaultProps }) => {
 	return {
 		...defaultProps,
-		Cell: props => (
-			<Suspense fallback={<Skeleton active={true} paragraph={null} />}>
-				<Cell {...props} other={{ editable, id, list, multiple, onChange }} />
-			</Suspense>
-		),
-		Filter: props => (
-			<Suspense fallback={<Skeleton active={true} paragraph={null} />}>
-				<Filter {...props} other={{ id, list }} />
-			</Suspense>
-		)
+		Cell: props =>
+			browser ? (
+				<Suspense fallback={<Skeleton active={true} paragraph={null} />}>
+					<Cell {...props} other={{ editable, id, list, multiple, onChange }} />
+				</Suspense>
+			) : null,
+		Filter: props =>
+			browser ? (
+				<Suspense fallback={<Skeleton active={true} paragraph={null} />}>
+					<Filter {...props} other={{ id, list }} />
+				</Suspense>
+			) : null
 	};
 };
 
@@ -22,6 +25,7 @@ const Cell = memo(({ other: { editable, id, list, multiple, onChange }, row: { o
 	if (typeof value === 'undefined') return null;
 
 	if (editable) {
+		const InputSelect = require('@volenday/input-select').default;
 		return (
 			<InputSelect
 				id={id}
@@ -39,6 +43,7 @@ const Cell = memo(({ other: { editable, id, list, multiple, onChange }, row: { o
 
 const Filter = memo(({ column: { filterValue, setFilter }, other: { id, list } }) => {
 	const listFilter = ['All', ...list];
+	const InputSelect = require('@volenday/input-select').default;
 
 	return (
 		<InputSelect
