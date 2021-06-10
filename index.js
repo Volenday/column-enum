@@ -3,6 +3,8 @@ import { Skeleton } from 'antd';
 
 const browser = typeof process.browser !== 'undefined' ? process.browser : true;
 
+import Filter from './filter';
+
 export default ({ defaultValue = 'all', editable = false, id, list, multiple = false, onChange, ...defaultProps }) => {
 	return {
 		...defaultProps,
@@ -15,7 +17,7 @@ export default ({ defaultValue = 'all', editable = false, id, list, multiple = f
 		Filter: props =>
 			browser ? (
 				<Suspense fallback={<Skeleton active={true} paragraph={null} />}>
-					<Filter {...props} other={{ id, list }} />
+					<Filter {...props} id={id} list={list} />
 				</Suspense>
 			) : null
 	};
@@ -39,19 +41,4 @@ const Cell = memo(({ other: { editable, id, list, multiple, onChange }, row: { o
 	}
 
 	return <span>{value}</span>;
-});
-
-const Filter = memo(({ column: { filterValue, setFilter }, other: { id, list } }) => {
-	const listFilter = ['All', ...list];
-	const InputSelect = require('@volenday/input-select').default;
-
-	return (
-		<InputSelect
-			id="filter"
-			list={listFilter}
-			onChange={(e, field, value) => setFilter(value !== 'All' ? value : '')}
-			withLabel={false}
-			value={filterValue ? filterValue : 'All'}
-		/>
-	);
 });
