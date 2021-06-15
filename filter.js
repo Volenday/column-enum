@@ -4,14 +4,14 @@ import { FilterFilled, FilterOutlined } from '@ant-design/icons';
 
 const Filter = ({ column, id, list, setFilter }) => {
 	const [selected, setSelected] = useState([]);
-	const [newOptions, setNewOptions] = useState(list);
+	const [newOptions, setNewOptions] = useState(['(Blank)', ...list]);
 	const [isPopoverVisible, setIsPopoverVisible] = useState(false);
 	const [sort, setSort] = useState('');
 
 	const withFilterValue = column.filterValue ? (column.filterValue.length !== 0 ? true : false) : false;
 
 	useEffect(() => {
-		if (!!column.filterValue) setSelected(column.filterValue);
+		if (!!column.filterValue) setSelected(column.filterValue.map(d => (d === '' ? '(Blank)' : d)));
 	}, [JSON.stringify(column.filterValue)]);
 
 	useEffect(() => {
@@ -48,7 +48,10 @@ const Filter = ({ column, id, list, setFilter }) => {
 	};
 
 	const onOk = () => {
-		setFilter(id, selected);
+		setFilter(
+			id,
+			selected.map(d => (d === '(Blank)' ? '' : d))
+		);
 
 		if (sort) column.toggleSortBy(sort === 'ASC' ? true : sort === 'DESC' ? false : '');
 		else column.clearSortBy();
