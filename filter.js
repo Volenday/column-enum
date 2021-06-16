@@ -11,7 +11,7 @@ const Filter = ({ column, id, list, setFilter }) => {
 	const withFilterValue = column.filterValue ? (column.filterValue.length !== 0 ? true : false) : false;
 
 	useEffect(() => {
-		if (!!column.filterValue) setSelected(column.filterValue.map(d => (d === '' ? '(Blank)' : d)));
+		if (!!column.filterValue) setSelected(column.filterValue['$in'].map(d => (d === '' ? '(Blank)' : d)));
 	}, [JSON.stringify(column.filterValue)]);
 
 	useEffect(() => {
@@ -48,10 +48,7 @@ const Filter = ({ column, id, list, setFilter }) => {
 	};
 
 	const onOk = () => {
-		setFilter(
-			id,
-			selected.map(d => (d === '(Blank)' ? '' : d))
-		);
+		setFilter(id, { $in: selected.map(d => (d === '(Blank)' ? '' : d)) });
 
 		if (sort) column.toggleSortBy(sort === 'ASC' ? true : sort === 'DESC' ? false : '');
 		else column.clearSortBy();
