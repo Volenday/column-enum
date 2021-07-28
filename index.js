@@ -5,7 +5,15 @@ const browser = typeof process.browser !== 'undefined' ? process.browser : true;
 
 import Filter from './filter';
 
-export default ({ defaultValue = 'all', editable = false, id, list, multiple = false, onChange, ...defaultProps }) => {
+const ColumnEnum = ({
+	defaultValue = 'all',
+	editable = false,
+	id,
+	list,
+	multiple = false,
+	onChange,
+	...defaultProps
+}) => {
 	return {
 		...defaultProps,
 		Cell: props =>
@@ -42,3 +50,5 @@ const Cell = memo(({ other: { editable, id, list, multiple, onChange }, row: { o
 
 	return <span>{value}</span>;
 });
+
+export default ColumnEnum;

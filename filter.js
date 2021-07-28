@@ -3,7 +3,7 @@ import { Button, Checkbox, Divider, Input, List, Popover } from 'antd';
 import { FilterFilled, FilterOutlined } from '@ant-design/icons';
 
 const Filter = ({ column, id, list, setFilter }) => {
-	const [selected, setSelected] = useState([]);
+	const [selected, setSelected] = useState(['(Blank)', ...list]);
 	const [newOptions, setNewOptions] = useState(['(Blank)', ...list]);
 	const [isPopoverVisible, setIsPopoverVisible] = useState(false);
 	const [sort, setSort] = useState('');
