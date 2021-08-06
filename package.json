@@ -14,7 +14,8 @@
 		"@volenday/input-select": "^2.1.2",
 		"antd": "^4.9.0",
 		"react": "^17.0.1",
-		"react-dom": "^17.0.1"
+		"react-dom": "^17.0.1",
+		"react-window": "^1.8.6"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.9",
