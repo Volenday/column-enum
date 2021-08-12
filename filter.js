@@ -55,7 +55,7 @@ const Filter = ({ column, id, list, setFilter }) => {
 	const onOk = () => {
 		setFilter(id, { $in: selected.map(d => (d === '(Blank)' ? '' : d)) });
 
-		if (sort) column.toggleSortBy(sort === 'ASC' ? true : sort === 'DESC' ? false : '');
+		if (sort) column.toggleSortBy(sort === 'ASC' ? false : sort === 'DESC' ? true : '');
 		else column.clearSortBy();
 	};
 
