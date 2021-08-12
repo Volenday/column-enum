@@ -58,7 +58,8 @@ module.exports = {
 		antd: 'antd',
 		'@ant-design/icons': '@ant-design/icons',
 		react: 'react',
-		'react-dom': 'react-dom'
+		'react-dom': 'react-dom',
+		'react-window': 'react-window'
 	},
 	plugins: [
 		new webpack.optimize.AggressiveMergingPlugin(),
