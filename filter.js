@@ -2,6 +2,7 @@ import React, { memo, useEffect, useState, useCallback } from 'react';
 import { Button, Checkbox, Divider, Input, Popover } from 'antd';
 import { FilterFilled, FilterOutlined } from '@ant-design/icons';
 import { FixedSizeList } from 'react-window';
+import { isEqual } from 'lodash';
 
 const Filter = ({ column, id, list, setFilter }) => {
 	const [selected, setSelected] = useState(['(Blank)', ...list]);
@@ -65,7 +66,16 @@ const Filter = ({ column, id, list, setFilter }) => {
 	};
 
 	const onOk = () => {
-		setFilter(id, { $in: selectedAll ? [] : selected.map(d => (d === '(Blank)' ? '' : d)) });
+		setFilter(id, {
+			$in: selectedAll
+				? isEqual(
+						list,
+						newOptions.filter(d => d !== '(Blank)')
+				  )
+					? []
+					: newOptions
+				: selected.map(d => (d === '(Blank)' ? '' : d))
+		});
 		if (sort) column.toggleSortBy(sort === 'ASC' ? false : sort === 'DESC' ? true : '');
 		else column.clearSortBy();
 	};
