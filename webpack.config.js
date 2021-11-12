@@ -54,7 +54,6 @@ module.exports = {
 		libraryTarget: 'commonjs2'
 	},
 	externals: {
-		'@volenday/input-select': '@volenday/input-select',
 		antd: 'antd',
 		'@ant-design/icons': '@ant-design/icons',
 		react: 'react',

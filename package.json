@@ -3,7 +3,7 @@
 	"version": "3.2.4",
 	"private": false,
 	"license": "MIT",
-	"author": "Jerome Miranda <jerome.m.miranda@gmail.com>",
+	"author": "AHAMatic <developers@volenday.com>",
 	"scripts": {
 		"dev": "webpack --watch --progress",
 		"build": "webpack --progress -p",
@@ -11,10 +11,10 @@
 	},
 	"main": "dist/index.min.js",
 	"peerDependencies": {
-		"@volenday/input-select": "^2.1.2",
-		"antd": "^4.9.0",
-		"react": "^17.0.1",
-		"react-dom": "^17.0.1",
+		"@ant-design/icons": "^4.7.0",
+		"antd": "^4.16.13",
+		"react": "^18.0.0-alpha-a44a7a2a3-20211111",
+		"react-dom": "^18.0.0-alpha-a44a7a2a3-20211111",
 		"react-window": "^1.8.6"
 	},
 	"devDependencies": {
@@ -52,8 +52,5 @@
 		"style-loader": "^2.0.0",
 		"webpack": "^4.44.1",
 		"webpack-cli": "^3.3.12"
-	},
-	"dependencies": {
-		"@ant-design/icons": "^4.6.2"
 	}
 }
