@@ -10,6 +10,7 @@ const ColumnEnum = ({
 	editable = false,
 	id,
 	list,
+	loading = false,
 	multiple = false,
 	onChange,
 	...defaultProps
@@ -25,7 +26,7 @@ const ColumnEnum = ({
 		Filter: props =>
 			browser ? (
 				<Suspense fallback={<Skeleton active={true} paragraph={null} />}>
-					<Filter {...props} id={id} list={list} />
+					<Filter {...props} id={id} list={list} loading={loading} />
 				</Suspense>
 			) : null
 	};
