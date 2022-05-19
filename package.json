@@ -47,13 +47,14 @@
 		"core-js": "^3.8.0",
 		"css-loader": "^5.0.1",
 		"file-loader": "^6.2.0",
-		"node-sass": "^5.0.0",
 		"sass-loader": "^10.1.0",
 		"style-loader": "^2.0.0",
 		"webpack": "^4.44.1",
 		"webpack-cli": "^3.3.12"
 	},
 	"dependencies": {
-		"@ant-design/icons": "^4.6.2"
+		"@ant-design/icons": "^4.6.2",
+		"react-string-replace": "^0.4.4",
+		"striptags": "^3.2.0"
 	}
 }
