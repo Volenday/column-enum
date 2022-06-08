@@ -1,5 +1,7 @@
 import React, { memo, Suspense } from 'react';
 import { Skeleton } from 'antd';
+import striptags from 'striptags';
+import reactStringReplace from 'react-string-replace';
 
 const browser = typeof process.browser !== 'undefined' ? process.browser : true;
 
@@ -13,6 +15,7 @@ const ColumnEnum = ({
 	loading = false,
 	multiple = false,
 	onChange,
+	keywords,
 	...defaultProps
 }) => {
 	return {
@@ -20,7 +23,7 @@ const ColumnEnum = ({
 		Cell: props =>
 			browser ? (
 				<Suspense fallback={<Skeleton active={true} paragraph={null} />}>
-					<Cell {...props} other={{ editable, id, list, multiple, onChange }} />
+					<Cell {...props} other={{ editable, id, list, multiple, onChange, keywords }} />
 				</Suspense>
 			) : null,
 		Filter: props =>
@@ -32,7 +35,28 @@ const ColumnEnum = ({
 	};
 };
 
-const Cell = memo(({ other: { editable, id, list, multiple, onChange }, row: { original }, value }) => {
+const removeHTMLEntities = text => {
+	const span = document.createElement('span');
+	return text.replace(/&[#A-Za-z0-9]+;/gi, entity => {
+		span.innerHTML = entity;
+		return span.innerText;
+	});
+};
+
+const highlightsKeywords = (keywords, stripHTMLTags = false, toConvert) => {
+	const strip = stripHTMLTags ? removeHTMLEntities(striptags(toConvert)) : toConvert;
+	const replaceText = reactStringReplace(strip, new RegExp('(' + keywords + ')', 'gi'), (match, index) => {
+		return (
+			<span key={`${match}-${index}`} style={{ backgroundColor: 'yellow', fontWeight: 'bold' }}>
+				{match}
+			</span>
+		);
+	});
+
+	return replaceText;
+};
+
+const Cell = memo(({ other: { editable, id, list, multiple, onChange, keywords }, row: { original }, value }) => {
 	if (typeof value === 'undefined') return null;
 
 	if (editable) {
@@ -49,7 +73,8 @@ const Cell = memo(({ other: { editable, id, list, multiple, onChange }, row: { o
 		);
 	}
 
-	return <span>{value}</span>;
+	const finalValue = highlightsKeywords(keywords, true, value);
+	return <span>{finalValue}</span>;
 });
 
 export default ColumnEnum;
