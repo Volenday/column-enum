@@ -11,7 +11,7 @@ const Filter = ({ column, id, list, setFilter, loading }) => {
 	const [sort, setSort] = useState('');
 	const [selectedAll, setSelectedtAll] = useState(false);
 
-	const withFilterValue = column.filterValue ? (column.filterValue.length !== 0 ? true : false) : false;
+	const withFilterValue = column.filterValue ? (column.filterValue['$in'].length !== 0 ? true : false) : false;
 	const listCount = newOptions.length;
 
 	useEffect(() => {
@@ -20,7 +20,8 @@ const Filter = ({ column, id, list, setFilter, loading }) => {
 				column.filterValue['$in'].length === 0
 					? prev
 					: column.filterValue['$in'].map(d => (d === '' ? '(Blank)' : d))
-			);
+			),
+				setSelectedtAll(column.filterValue['$in'].length === list.length + 1 ? true : false);
 	}, [JSON.stringify(column.filterValue)]);
 
 	useEffect(() => {
@@ -69,8 +70,8 @@ const Filter = ({ column, id, list, setFilter, loading }) => {
 		setFilter(id, {
 			$in: selectedAll
 				? isEqual(
-						list,
-						newOptions.filter(d => d !== '(Blank)')
+						newOptions.filter(d => d !== '(Blank)'),
+						list
 				  )
 					? []
 					: newOptions
@@ -82,7 +83,7 @@ const Filter = ({ column, id, list, setFilter, loading }) => {
 
 	const onSelectAll = () => {
 		if (selectedAll) return onClearAll();
-		setSelected([...list, '(Blank)']);
+		setSelected(['(Blank)', ...list]);
 		setSelectedtAll(true);
 	};
 
